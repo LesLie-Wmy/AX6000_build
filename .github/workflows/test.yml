@@ -1,86 +1,34 @@
 #
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+# Copyright (c) 2019-2021 P3TERX <https://p3terx.com>
 #
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 #
 # https://github.com/P3TERX/Actions-OpenWrt
-# Description: Build OpenWrt using GitHub Actions
+# File: .github/workflows/update-checker.yml
+# Description: Source code update checker
 #
 
 name: test
 
-on:
-  repository_dispatch:
-  schedule:
-    - cron: '*/2 * * * *'
-  workflow_dispatch:
-    inputs:
-      ip:
-        description: 'lan ip address'
-        required: true
-        default: '192.168.1.1'
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
-
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
-  UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: true
-  TZ: Asia/Shanghai
-  LANIP: 192.168.1.1
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: 0 */18 * * *
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  check:
+    runs-on: ubuntu-latest
 
     steps:
-
-    - if: ${{ github.event.inputs.ip == '' }}
-      run: |
-        echo '===aaa1==='
-        echo $LANIP
-        echo '===aaa2==='
-        export LANIP=192.168.2.2
-        echo '===aaa3==='
-        echo ${{ github.event.inputs.ip }}
-        echo '===aaa4==='
-        cat $GITHUB_ENV
-        echo '===aaa5==='
-        echo $LANIP
-        
-    - if: ${{ github.event.inputs.ip == null }}
-      run: |
-        echo '===bbb1==='
-        echo $LANIP
-        echo '===bbb2==='
-        export LANIP=192.168.2.2
-        echo '===bbb3==='
-        echo ${{ github.event.inputs.ip }}
-        echo '===bbb4==='
-        cat $GITHUB_ENV
-        echo '===bbb5==='
-        echo $LANIP
-
-    - if: ${{ github.event.inputs.ip != null }}
-      run: |
-        echo '===ccc1==='
-        echo $LANIP
-        echo '===ccc2==='
-        export LANIP=192.168.2.2
-        echo '===ccc3==='
-        echo ${{ github.event.inputs.ip }}
-        echo '===ccc4==='
-        cat $GITHUB_ENV
-        echo '===ccc5==='
-        echo $LANIP
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        token: ${{ secrets.AUTH_PAT }}
+        repository: ${{ github.repository }}
+        retain_days: 7
+        keep_minimum_runs: 2

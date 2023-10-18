@@ -1,3 +1,53 @@
+## 红米AX6000 stock layout 固件
+
+## redmi-ax6000-stock-immortalwrt-23.05
+源代码地址 [https://github.com/immortalwrt/immortalwrt](https://github.com/immortalwrt/immortalwrt)
+
+包含插件：（不确定）
+ * wireguard
+ * openclash
+ * smartdns
+ * upnp
+ * autoreboot 
+ * 动态DSN(ddns)
+ * zerotier*
+ * openvpn
+ * openvpn server
+ * ~~网络加速（MediaTek HNAT/turob-acc-mtk）~~
+ * CPU占用率限制
+ * 网络共享
+ * 挂载SMB网络共享
+ * 组播转换（msd-lite）
+ * KMS服务器
+ * 网络唤醒
+ * 带宽监控
+
+
+## redmi-ax6000-stock-immortalwrt-mt798x
+源代码地址 [https://github.com/hanwckf/immortalwrt-mt798x](https://github.com/hanwckf/immortalwrt-mt798x)
+
+包含插件：
+ * wireguard
+ * openclash
+ * smartdns
+ * upnp
+ * autoreboot 
+ * 动态DSN(ddns)
+ * zerotier*
+ * openvpn
+ * openvpn server
+ * 网络加速（MediaTek HNAT/turob-acc-mtk）
+ * CPU占用率限制
+ * 网络共享
+ * 挂载SMB网络共享
+ * 组播转换（msd-lite）
+ * KMS服务器
+ * 网络唤醒
+ * 带宽监控
+
+
+
+
 **English** | [中文](https://p3terx.com/archives/build-openwrt-with-github-actions.html)
 
 # Actions-OpenWrt
