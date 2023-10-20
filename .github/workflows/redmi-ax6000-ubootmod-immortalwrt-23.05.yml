@@ -175,9 +175,9 @@ jobs:
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && [ $UPLOAD_WETRANSFER = true ] && echo "------" >> release.txt
-        echo "## immortalwrt-23.05 stock layout" >> release.txt
-        echo "* This is Redmi AX6000 firewarm only for stock layout!!! " >> release.txt
-        echo "* 这是红米AX6000 stock layout(原厂分区)固件，其他分区请勿刷入！！！" >> release.txt
+        echo "## immortalwrt-23.05 ubootmod layout" >> release.txt
+        echo "* This is Redmi AX6000 firewarm only for ubootmod layout!!! " >> release.txt
+        echo "* 这是红米AX6000 ubootmod layout 固件，其他分区请勿刷入！！！" >> release.txt
         echo "* Lan ip is: \`$LANIP\`" >> release.txt
         echo "* password is \`password\`" >> release.txt
         echo "------" >> release.txt
@@ -198,14 +198,15 @@ jobs:
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
-        retain_days: 1
-        keep_minimum_runs: 3
-
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        retain_days: 7
+    
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.2.1
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 5
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
