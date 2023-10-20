@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: AX6000_stock_layout_immortalwrt-mt798x
+name: redmi-ax6000-stock-immortalwrt-mt798x
 
 on:
   repository_dispatch:

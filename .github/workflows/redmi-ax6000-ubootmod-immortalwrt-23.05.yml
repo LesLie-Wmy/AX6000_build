@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: redmi-ax6000-stock-immortalwrt-23.05
+name: redmi-ax6000-ubootmod-immortalwrt-23.05
 
 on:
   repository_dispatch:
