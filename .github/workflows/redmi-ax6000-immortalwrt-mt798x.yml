@@ -170,20 +170,24 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::${{ env.FILE_DATE }}-${{ github.workflow }}-${{ env.DEVICE_NAME }}"
         touch release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && [ $UPLOAD_WETRANSFER = true ] && echo "------" >> release.txt
-        echo "## hanwckf immortalwrt-21.02 uboot layout" >> release.txt
+        echo "🎉🎉🎉🎉🎉🎉🎉🎉" >> release.txt
+        echo "## immortalwrt-23.05 uboot layout " >> release.txt
         echo "* This is Redmi AX6000 firewarm only for uboot layout!!! " >> release.txt
         echo "* 这是红米AX6000 uboot layout 固件，其他分区请勿刷入！！！" >> release.txt
+        echo "由衷感谢所有为openwrt无私奉献的大佬们" >> release.txt
         echo "* Lan ip is: \`$LANIP\`" >> release.txt
         echo "* password is \`password\`" >> release.txt
         echo "------" >> release.txt
         useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
         echo "$useVersionInfo" >> release.txt
+        echo "📥 固件下载" >> release.txt
         echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
