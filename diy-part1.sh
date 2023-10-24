@@ -44,3 +44,8 @@
 #tar -zxf ./dev.tar.gz
 #chmod +x ./clash*
 #rm -rf ./*.gz
+
+echo 'src-git messense https://github.com/messense/aliyundrive-webdav' >>feeds.conf.default
+
+find ./ | grep Makefile | grep mosdns | xargs rm -f
+git clone https://github.com/sbwml/luci-app-mosdns package/mosdns
