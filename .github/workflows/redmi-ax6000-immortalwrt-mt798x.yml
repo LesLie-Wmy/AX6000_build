@@ -30,6 +30,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  issues: write
   
 env:
   REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
