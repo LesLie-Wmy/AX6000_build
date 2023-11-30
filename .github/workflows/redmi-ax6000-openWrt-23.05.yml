@@ -52,13 +52,13 @@ jobs:
         
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/immortalwrt/immortalwrt
+        REPO_URL: https://github.com/openwrt/openwrt
         REPO_BRANCH: openwrt-23.05
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+        chmod +x diy-part1.sh
         cd openwrt
-        cp -f ../diy/mt798x/op1.sh ./
-        chmod +x ./op1.sh && ./op1.sh
+        $GITHUB_WORKSPACE/diy-part1.sh
 
     - name: Update & Install feeds
       working-directory: ./openwrt
@@ -67,8 +67,9 @@ jobs:
 
         ./scripts/feeds install -a
 
-        cp -f ../diy/mt798x/op2.sh ./        
-        chmod +x ./op2.sh && ./op2.sh      
+        chmod +x diy-part2.sh
+        cd openwrt
+        $GITHUB_WORKSPACE/diy-part2.sh   
 
         sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='Redmi-AX6000-OpenWrt-23.05-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
               
