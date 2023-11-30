@@ -46,10 +46,10 @@ sed -i "s/hostname='.*'/hostname='OpenWRT'/g" package/base-files/files/bin/confi
 ##加入作者信息
 sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWRT-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By LesLie.W'/g" package/base-files/files/etc/openwrt_release
-cp -af feeds/extraipk/patch/diy/banner-easy  package/base-files/files/etc/banner
+# cp -af feeds/extraipk/patch/diy/banner-easy  package/base-files/files/etc/banner
 
 sed -i "2iuci set istore.istore.channel='leslie_w'" package/emortal/default-settings/files/99-default-settings
-sed -i "3iuci commit istore" package/emortal/default-settings/files/99-default-settings
+# sed -i "3iuci commit istore" package/emortal/default-settings/files/99-default-settings
 
 
 ##FQ全部调到VPN菜单
