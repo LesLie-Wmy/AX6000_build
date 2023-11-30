@@ -18,21 +18,21 @@ sed -i 's/DNS_SERVERS=""/DNS_SERVERS="114.114.114.114"/g' package/network/servic
 
 
 ##
-rm -rf ./feeds/extraipk/theme/luci-theme-argon-18.06
-rm -rf ./feeds/extraipk/theme/luci-app-argon-config-18.06
-rm -rf ./feeds/extraipk/theme/luci-theme-design
-rm -rf ./feeds/extraipk/theme/luci-theme-edge
-rm -rf ./feeds/extraipk/theme/luci-theme-ifit
-rm -rf ./feeds/extraipk/theme/luci-theme-opentopd
-rm -rf ./feeds/extraipk/theme/luci-theme-neobird
+# rm -rf ./feeds/extraipk/theme/luci-theme-argon-18.06
+# rm -rf ./feeds/extraipk/theme/luci-app-argon-config-18.06
+# rm -rf ./feeds/extraipk/theme/luci-theme-design
+# rm -rf ./feeds/extraipk/theme/luci-theme-edge
+# rm -rf ./feeds/extraipk/theme/luci-theme-ifit
+# rm -rf ./feeds/extraipk/theme/luci-theme-opentopd
+# rm -rf ./feeds/extraipk/theme/luci-theme-neobird
 
-rm -rf ./package/feeds/extraipk/luci-theme-argon-18.06
-rm -rf ./package/feeds/extraipk/luci-app-argon-config-18.06
-rm -rf ./package/feeds/extraipk/theme/luci-theme-design
-rm -rf ./package/feeds/extraipk/theme/luci-theme-edge
-rm -rf ./package/feeds/extraipk/theme/luci-theme-ifit
-rm -rf ./package/feeds/extraipk/theme/luci-theme-opentopd
-rm -rf ./package/feeds/extraipk/theme/luci-theme-neobird
+# rm -rf ./package/feeds/extraipk/luci-theme-argon-18.06
+# rm -rf ./package/feeds/extraipk/luci-app-argon-config-18.06
+# rm -rf ./package/feeds/extraipk/theme/luci-theme-design
+# rm -rf ./package/feeds/extraipk/theme/luci-theme-edge
+# rm -rf ./package/feeds/extraipk/theme/luci-theme-ifit
+# rm -rf ./package/feeds/extraipk/theme/luci-theme-opentopd
+# rm -rf ./package/feeds/extraipk/theme/luci-theme-neobird
 
 
 ##取消bootstrap为默认主题
@@ -48,7 +48,7 @@ sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWRT-$(date +%Y%m%d)
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By LesLie.W'/g" package/base-files/files/etc/openwrt_release
 # cp -af feeds/extraipk/patch/diy/banner-easy  package/base-files/files/etc/banner
 
-sed -i "2iuci set istore.istore.channel='leslie_w'" package/emortal/default-settings/files/99-default-settings
+# sed -i "2iuci set istore.istore.channel='leslie_w'" package/emortal/default-settings/files/99-default-settings
 # sed -i "3iuci commit istore" package/emortal/default-settings/files/99-default-settings
 
 
