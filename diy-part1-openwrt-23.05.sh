@@ -17,12 +17,13 @@
 #echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 
-echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
-echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
+# echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
+# echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 
-echo -e "\nsrc-git smpackage https://github.com/kenzok8/small-package" feeds.conf.default
+# echo -e "\nsrc-git smpackage https://github.com/kenzok8/small-package" feeds.conf.default
 
-echo -e "\nsrc-git extraipk https://github.com/xiangfeidexiaohuo/extra-ipk" >> feeds.conf.default
+# echo -e "\nsrc-git extraipk https://github.com/xiangfeidexiaohuo/extra-ipk" >> feeds.conf.default
+sed -i '$a src-git NueXini_Packages https://github.com/NueXini/NueXini_Packages.git' feeds.conf.default
 #cd ./package
 
 #export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
