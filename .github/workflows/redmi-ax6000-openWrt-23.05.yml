@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: redmi-ax6000-immortalwrt-hanwckf-test
+name: redmi-ax6000-openWrt-23.05
 
 on:
   repository_dispatch:
