@@ -21,6 +21,8 @@ echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.d
 echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
 
 echo -e "\nsrc-git smpackage https://github.com/kenzok8/small-package" feeds.conf.default
+
+echo -e "\nsrc-git extraipk https://github.com/xiangfeidexiaohuo/extra-ipk" >> feeds.conf.default
 #cd ./package
 
 #export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
