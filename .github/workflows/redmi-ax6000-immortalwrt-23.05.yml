@@ -89,7 +89,7 @@ jobs:
       run: df -hT
       
     - name: Clone source code
-      working-directory: $GITHUB_WORKSPACE/workdir
+      working-directory: ${GITHUB_WORKSPACE}/workdir
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
