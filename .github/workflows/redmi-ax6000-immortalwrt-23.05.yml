@@ -82,25 +82,20 @@ jobs:
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p ${GITHUB_WORKSPACE}/workdir
+        sudo ln -sf ${GITHUB_WORKSPACE}/workdir /workdir
         sudo chown $USER:$GROUPS ${GITHUB_WORKSPACE}/workdir
+        sudo chown $USER:$GROUPS /workdir
         
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
-    
-    - name: SSH connection to Actions
-      uses: P3TERX/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     
     - name: Clone source code
       working-directory: /workdir
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
-        ln -sf $GITHUB_WORKSPACE/workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
       run: |
