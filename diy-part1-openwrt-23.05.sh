@@ -49,6 +49,9 @@ sed -i '$a src-git NueXini_Packages https://github.com/NueXini/NueXini_Packages.
 #chmod +x ./clash*
 #rm -rf ./*.gz
 
+cd $GITHUB_WORKSPACE/openwrt/package
+git clone https://github.com/jerrykuku/luci-theme-argon.git
+
 echo 'src-git messense https://github.com/messense/aliyundrive-webdav' >>feeds.conf.default
 
 find ./ | grep Makefile | grep mosdns | xargs rm -f
