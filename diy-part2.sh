@@ -41,7 +41,7 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
 
 ##更改主机名
-sed -i "s/hostname='.*'/hostname='OpenWRT'/g" package/base-files/files/bin/config_generate
+sed -i "s/hostname='.*'/hostname='AX6000'/g" package/base-files/files/bin/config_generate
 
 ##加入作者信息
 sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWRT-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
@@ -96,3 +96,8 @@ sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By LesLie.W'/g" package/base
 # sed -i 's/services/vpn/g' package/feeds/extraipk/luci-app-bypass/luasrc/model/cbi/bypass/*.lua
 # sed -i 's/services/vpn/g' package/feeds/extraipk/luci-app-bypass/luasrc/view/bypass/*.htm
 
+cd $GITHUB_WORKSPACE/openwrt/package
+git clone https://github.com/jerrykuku/luci-theme-argon.git
+
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
+svn co https://github.com/immortalwrt/packages/trunk/lang/golang/ $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
