@@ -100,5 +100,5 @@ cd $GITHUB_WORKSPACE/openwrt/package
 rm -rf luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git
 
-#rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
-#svn co https://github.com/immortalwrt/packages/trunk/lang/golang/ $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang/golang
+svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang/golang $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang/golang
