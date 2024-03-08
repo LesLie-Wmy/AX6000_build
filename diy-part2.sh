@@ -97,6 +97,7 @@ sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By LesLie.W'/g" package/base
 # sed -i 's/services/vpn/g' package/feeds/extraipk/luci-app-bypass/luasrc/view/bypass/*.htm
 
 cd $GITHUB_WORKSPACE/openwrt/package
+rm -rf luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git
 
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
