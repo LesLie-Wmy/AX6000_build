@@ -108,3 +108,7 @@ rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullc
 cd $GITHUB_WORKSPACE/openwrt
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
+
+# 更新 chinadns-ng 版本
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+svn export https://github.com/immortalwrt/packages/trunk/net/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
