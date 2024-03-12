@@ -205,16 +205,18 @@ jobs:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
         body_path: release.txt
+      
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
+      if: steps.compile.outputs.status == 'success'
       with:
         retain_days: 0
         keep_minimum_runs: 3
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
         keep_latest: 3
         delete_tags: true
