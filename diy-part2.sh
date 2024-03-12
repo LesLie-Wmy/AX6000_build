@@ -112,3 +112,14 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # 更新 chinadns-ng 版本
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
 #svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+cd $GITHUB_WORKSPACE/openwrt/feeds
+mkdir temp_chinadns-ng
+cd temp_chinadns-ng
+git init
+git config core.sparseCheckout true
+echo 'chinadns-ng' > .git/info/sparse-checkout
+git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
+git pull origin main
+vm chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
+cd ..
+rm -rf temp_chinadns-ng
