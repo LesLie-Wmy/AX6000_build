@@ -100,5 +100,11 @@ cd $GITHUB_WORKSPACE/openwrt/package
 rm -rf luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git
 
-#rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang/golang
-#svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang/golang $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang/golang
+# 移除 openwrt feeds 自带的核心包
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
+rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+
+# 更新 golang 1.22 版本
+cd $GITHUB_WORKSPACE/openwrt
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
