@@ -101,7 +101,7 @@ rm -rf luci-theme-argon
 git clone https://github.com/jerrykuku/luci-theme-argon.git
 
 # 移除 openwrt feeds 自带的核心包
-rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
+# rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 
 # 更新 golang 1.22 版本
@@ -120,6 +120,6 @@ git config core.sparseCheckout true
 echo 'chinadns-ng' > .git/info/sparse-checkout
 git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
 git pull origin main
-vm chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
+mv chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
 cd ..
 rm -rf temp_chinadns-ng
