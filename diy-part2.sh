@@ -14,7 +14,7 @@
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
 # Modify default DNS
-sed -i 's/DNS_SERVERS=""/DNS_SERVERS="114.114.114.114"/g' package/network/services/dnsmasq/files/dnsmasq.init
+sed -i 's/DNS_SERVERS=""/DNS_SERVERS="1.1.1.1"/g' package/network/services/dnsmasq/files/dnsmasq.init
 
 
 ##
@@ -102,7 +102,7 @@ git clone https://github.com/jerrykuku/luci-theme-argon.git
 
 # 移除 openwrt feeds 自带的核心包
 # rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
-rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+# rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 
 # 更新 golang 1.22 版本
 cd $GITHUB_WORKSPACE/openwrt
@@ -110,16 +110,17 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 # 更新 chinadns-ng 版本
-rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
 #svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
-cd $GITHUB_WORKSPACE/openwrt/feeds
-mkdir temp_chinadns-ng
-cd temp_chinadns-ng
-git init
-git config core.sparseCheckout true
-echo 'chinadns-ng' > .git/info/sparse-checkout
-git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
-git pull origin main
-mv chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
-cd ..
-rm -rf temp_chinadns-ng
+
+# rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+# cd $GITHUB_WORKSPACE/openwrt/feeds
+# mkdir temp_chinadns-ng
+# cd temp_chinadns-ng
+# git init
+# git config core.sparseCheckout true
+# echo 'chinadns-ng' > .git/info/sparse-checkout
+# git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
+# git pull origin main
+# mv chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
+# cd ..
+# rm -rf temp_chinadns-ng
