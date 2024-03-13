@@ -124,3 +124,5 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # mv chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
 # cd ..
 # rm -rf temp_chinadns-ng
+
+merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueXini_Packages package/lean/vsftpd-alt
