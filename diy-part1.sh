@@ -10,6 +10,8 @@
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
 #
 
+
+chmod +x $GITHUB_WORKSPACE/functions.sh
 source $GITHUB_WORKSPACE/functions.sh
 
 # Uncomment a feed source
