@@ -3,8 +3,8 @@ src-git luci https://git.openwrt.org/project/luci.git;openwrt-23.05
 src-git routing https://git.openwrt.org/feed/routing.git;openwrt-23.05
 src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-23.05
 
-#src-git xiaorouji  https://github.com/xiaorouji/openwrt-passwall
-#src-git kenzo https://github.com/kenzok8/openwrt-packages
-#src-git small https://github.com/kenzok8/small
+src-git xiaorouji  https://github.com/xiaorouji/openwrt-passwall
+src-git kenzo https://github.com/kenzok8/openwrt-packages
+src-git small https://github.com/kenzok8/small
 #src-git jell https://github.com/kenzok8/jell
-src-git jell https://github.com/kenzok8/small-package
+#src-git jell https://github.com/kenzok8/small-package
