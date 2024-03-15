@@ -1,0 +1,35 @@
+#!/bin/sh
+
+
+
+#set luci default language
+uci set luci.main.lang='zh_cn'
+uci commit luci
+
+#enable wlan
+uci set wireless.@wifi-device[0].disabled='1'
+uci set wireless.@wifi-iface[0].disabled='1'
+uci set wireless.@wifi-device[1].disabled='1'
+uci set wireless.@wifi-iface[1].disabled='1'
+uci set wireless.@wifi-device[0].country='CN'
+uci set wireless.@wifi-device[0].channel='auto'
+uci set wireless.@wifi-iface[0].encryption='psk2+ccmp'
+uci set wireless.@wifi-iface[0].key='12345678'
+uci set wireless.@wifi-iface[0].ieee80211r='1'
+uci set wireless.@wifi-iface[0].mobility_domain='1111'
+uci set wireless.@wifi-iface[0].reassociation_deadline='20000'
+uci set wireless.@wifi-iface[0].ft_over_ds='0'
+uci set wireless.@wifi-iface[0].ft_psk_generate_local='1'
+uci set wireless.@wifi-iface[0].ssid='MyWifi'
+uci set wireless.@wifi-device[1].country='CN'
+uci set wireless.@wifi-device[1].channel='auto'
+uci set wireless.@wifi-device[1].htmode='HE160'
+uci set wireless.@wifi-iface[1].encryption='psk2+ccmp'
+uci set wireless.@wifi-iface[1].key='12345678'
+uci set wireless.@wifi-iface[1].ieee80211r='1'
+uci set wireless.@wifi-iface[1].mobility_domain='1111'
+uci set wireless.@wifi-iface[1].reassociation_deadline='20000'
+uci set wireless.@wifi-iface[1].ft_over_ds='0'
+uci set wireless.@wifi-iface[1].ft_psk_generate_local='1'
+uci set wireless.@wifi-iface[1].ssid='MyWifi 5G'
+uci commit wireless
