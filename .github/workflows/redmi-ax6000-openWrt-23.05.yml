@@ -213,13 +213,13 @@ jobs:
       if: steps.compile.outputs.status == 'success'
       with:
         retain_days: 0
-        keep_minimum_runs: 3
+        keep_minimum_runs: 9
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 9
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
