@@ -3,4 +3,4 @@
 # 更新 golang 1.22 版本
 cd $GITHUB_WORKSPACE/openwrt
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
