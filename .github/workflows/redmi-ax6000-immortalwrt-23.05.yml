@@ -37,7 +37,7 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: redmi-ax6000-immortalwrt-23.05.config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  DIY_P2_SH: diy-part2-go22.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
