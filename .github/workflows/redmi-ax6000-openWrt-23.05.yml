@@ -37,7 +37,7 @@ env:
   FEEDS_CONF: openwrt_23.05_feeds.conf.default
   CONFIG_FILE: redmi-ax6000-openwrt-23.05_1.config
   DIY_P1_SH: diy-part1-openwrt-23.05.sh
-  DIY_P2_SH: diy-part2.sh
+  DIY_P2_SH: diy-part2-go22.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
