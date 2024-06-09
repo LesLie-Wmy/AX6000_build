@@ -34,7 +34,7 @@ permissions:
 env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: main
-  FEEDS_CONF: openwrt_main_feeds.conf.default
+  FEEDS_CONF: config/openwrt_main/redmi-ax6000.config
   CONFIG_FILE: redmi-ax6000-openwrt-23.05_1.config
   DIY_P1_SH: script/openwrt-main/diy-part1.sh
   DIY_P2_SH: script/openwrt-main/diy-part2.sh
