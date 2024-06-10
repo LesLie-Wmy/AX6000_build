@@ -131,7 +131,7 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 
 # merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueXini_Packages package/lean/vsftpd-alt
 
-cd $GITHUB_WORKSPACE/openwrt/package/lib
+cd $GITHUB_WORKSPACE/openwrt/package/libs
 rm -rf mbedtls
 mkdir temp_mbedtls
 cd temp_mbedtls
@@ -140,7 +140,7 @@ git config core.sparseCheckout true
 echo 'mbedtls' > .git/info/sparse-checkout
 git remote add -f origin https://github.com/openwrt/openwrt.git
 git pull origin openwrt-23.05
-mv mbedtls $GITHUB_WORKSPACE/openwrt/package/lib
+mv package/libs/mbedtls $GITHUB_WORKSPACE/openwrt/package/libs
 cd ..
 rm -rf temp_mbedtls
 
@@ -152,7 +152,7 @@ git config core.sparseCheckout true
 echo 'ustream-ssl' > .git/info/sparse-checkout
 git remote add -f origin https://github.com/openwrt/openwrt.git
 git pull origin openwrt-23.05
-mv ustream-ssl $GITHUB_WORKSPACE/openwrt/package/lib
+mv package/libs/ustream-ssl $GITHUB_WORKSPACE/openwrt/package/libs
 cd ..
 rm -rf temp_ustream-ssl
 
@@ -164,6 +164,6 @@ git config core.sparseCheckout true
 echo 'uclient' > .git/info/sparse-checkout
 git remote add -f origin https://github.com/openwrt/openwrt.git
 git pull origin openwrt-23.05
-mv uclient $GITHUB_WORKSPACE/openwrt/package/lib
+mv package/libs/uclient $GITHUB_WORKSPACE/openwrt/package/libs
 cd ..
 rm -rf temp_uclient
