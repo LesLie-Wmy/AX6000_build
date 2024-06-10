@@ -130,3 +130,40 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 # rm -rf temp_chinadns-ng
 
 # merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueXini_Packages package/lean/vsftpd-alt
+
+cd $GITHUB_WORKSPACE/openwrt/package/lib
+rm -rf mbedtls
+mkdir temp_mbedtls
+cd temp_mbedtls
+git init
+git config core.sparseCheckout true
+echo 'mbedtls' > .git/info/sparse-checkout
+git remote add -f origin https://github.com/openwrt/openwrt.git
+git pull origin openwrt-23.05
+mv mbedtls $GITHUB_WORKSPACE/openwrt/package/lib
+cd ..
+rm -rf temp_mbedtls
+
+rm -rf ustream-ssl
+mkdir temp_ustream-ssl
+cd temp_ustream-ssl
+git init
+git config core.sparseCheckout true
+echo 'ustream-ssl' > .git/info/sparse-checkout
+git remote add -f origin https://github.com/openwrt/openwrt.git
+git pull origin openwrt-23.05
+mv ustream-ssl $GITHUB_WORKSPACE/openwrt/package/lib
+cd ..
+rm -rf temp_ustream-ssl
+
+rm -rf uclient
+mkdir temp_uclient
+cd temp_uclient
+git init
+git config core.sparseCheckout true
+echo 'uclient' > .git/info/sparse-checkout
+git remote add -f origin https://github.com/openwrt/openwrt.git
+git pull origin openwrt-23.05
+mv uclient $GITHUB_WORKSPACE/openwrt/package/lib
+cd ..
+rm -rf temp_uclient
