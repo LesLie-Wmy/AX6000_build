@@ -107,6 +107,15 @@ git clone https://github.com/jerrykuku/luci-theme-argon.git
 # 移除 openwrt feeds 自带的核心包
 # rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 # rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+cd $GITHUB_WORKSPACE/openwrt/package/feeds/luci
+rm -rf luci-app-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall.git
+mv openwrt-passwall/luci-app-passwall ./
+
+cd $GITHUB_WORKSPACE/openwrt/feeds/luci/applications
+rm -rf luci-app-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall.git
+mv openwrt-passwall/luci-app-passwall ./
 
 # 更新 golang 1.22 版本
 cd $GITHUB_WORKSPACE/openwrt
