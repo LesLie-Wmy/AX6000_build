@@ -140,3 +140,8 @@ git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/l
 # rm -rf temp_chinadns-ng
 
 merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueXini_Packages package/lean/vsftpd-alt
+
+cd $GITHUB_WORKSPACE/openwrt/package
+git clone https://github.com/xiaorouji/openwrt-passwall.git
+git clone https://github.com/xiaorouji/openwrt-passwall-packages.git
+
