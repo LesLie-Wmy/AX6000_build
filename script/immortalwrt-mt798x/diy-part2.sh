@@ -18,7 +18,7 @@ source $GITHUB_WORKSPACE/functions.sh
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
 # Add PARAMENC & PARAMENC to DDNS dynu.com.json
-sed -i 's/hostname=\[DOMAIN\]/hostname=\[DOMAIN\]\[PARAMOPT\]/g' $GITHUB_WORKSPACE/openwrt/package/feeds/packages/ddns-scripts/files/usr/share/ddns/default/dynu.com.json
+sed -i 's/DOMAIN\]&myipDOMAIN\]\[PARAMOPT\]&myip/g' $GITHUB_WORKSPACE/openwrt/package/feeds/packages/ddns-scripts/files/usr/share/ddns/default/dynu.com.json
 sed -i 's/未編碼 URL）中的 \[PARAMENC\]/未編碼 URL）中的 \[PARAMOPT\]/g' $GITHUB_WORKSPACE/openwrt/package/feeds/luci/applications/luci-app-ddns/po/zh_Hant/ddns.po
 sed -i 's/未编码 URL）中的 \[PARAMENC\]/未编码 URL）中的 \[PARAMOPT\]/g' $GITHUB_WORKSPACE/openwrt/package/feeds/luci/applications/luci-app-ddns/po/zh_Hans/ddns.po
 
