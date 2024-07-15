@@ -151,5 +151,7 @@ merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueX
 
 cd $GITHUB_WORKSPACE/openwrt/package
 git clone https://github.com/xiaorouji/openwrt-passwall.git
-git clone https://github.com/xiaorouji/openwrt-passwall-packages.git
+# git clone https://github.com/xiaorouji/openwrt-passwall-packages.git
+git clone -b go1.21 https://github.com/sbwml/openwrt_helloworld helloworld
+rm -rf $GITHUB_WORKSPACE/openwrt/package/helloworld/luci-app-passwall
 
