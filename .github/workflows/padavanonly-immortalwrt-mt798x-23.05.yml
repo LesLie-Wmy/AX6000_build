@@ -51,37 +51,37 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout Projects
-        uses: actions/checkout@main
+    - name: Checkout Projects
+      uses: actions/checkout@main
 
-      - name: Free Disk Space
-        uses: FirelightFlagboy/gh-runner-free-disk-space@main
-        with:
-          android: true
-          dotnet: true
-          haskell: true
-          docker-images: true
-          large-packages: true
-          swap-storage: true
-          tool-cache: true
+    - name: Free Disk Space
+      uses: FirelightFlagboy/gh-runner-free-disk-space@main
+      with:
+        android: true
+        dotnet: true
+        haskell: true
+        docker-images: true
+        large-packages: true
+        swap-storage: true
+        tool-cache: true
 
-      - name: Initialization Environment
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo -E apt -yqq update
-          sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq autoremove --purge
-          sudo -E apt -yqq autoclean
-          sudo -E apt -yqq clean
-          sudo -E apt -yqq install dos2unix libfuse-dev
-          sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
-          sudo -E systemctl daemon-reload
-          sudo timedatectl set-timezone "$TZ"
-          sudo mkdir -p ${GITHUB_WORKSPACE}/workdir
-          sudo ln -sf ${GITHUB_WORKSPACE}/workdir /workdir
-          sudo chown $USER:$GROUPS ${GITHUB_WORKSPACE}/workdir
-          sudo chown $USER:$GROUPS /workdir
+    - name: Initialization Environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt -yqq update
+        sudo -E apt -yqq full-upgrade
+        sudo -E apt -yqq autoremove --purge
+        sudo -E apt -yqq autoclean
+        sudo -E apt -yqq clean
+        sudo -E apt -yqq install dos2unix libfuse-dev
+        sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+        sudo -E systemctl daemon-reload
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p ${GITHUB_WORKSPACE}/workdir
+        sudo ln -sf ${GITHUB_WORKSPACE}/workdir /workdir
+        sudo chown $USER:$GROUPS ${GITHUB_WORKSPACE}/workdir
+        sudo chown $USER:$GROUPS /workdir
       
     - name: Check space usage
       if: (!cancelled())
