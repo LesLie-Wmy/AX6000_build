@@ -38,7 +38,7 @@ env:
   CONFIG_FILE: config/23.05/immortalwrt/padavanonly-mt798x.config
   DIY_P1_SH: script/23.05/immortalwrt/padavanonly-mt798x/diy-part1.sh
   DIY_P2_SH: script/23.05/immortalwrt/padavanonly-mt798x/diy-part2.sh
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
@@ -169,6 +169,7 @@ jobs:
           NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($TYPE\).*")
           P=${FILE//$(basename $FILE)/$replace}
           NEW_FILE="$P""${{ env.FILE_DATE }}"_"$NAME"."$EXT"
+          echo "$FILE => $NEW_FILE"
           mv -f $FILE $NEW_FILE
         done
         cd bin/targets/*/*
