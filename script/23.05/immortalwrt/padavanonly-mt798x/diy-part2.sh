@@ -40,9 +40,9 @@ sed -i 's/DNS_SERVERS=""/DNS_SERVERS="1.1.1.1"/g' package/network/services/dnsma
 
 
 ##取消bootstrap为默认主题
-sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
+#sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+#sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+#sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
 
 ##更改主机名
 sed -i "s/hostname='.*'/hostname='AX6000'/g" package/base-files/files/bin/config_generate
@@ -108,10 +108,10 @@ git clone https://github.com/jerrykuku/luci-theme-argon.git
 # rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 # rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 
-# 更新 golang 1.22 版本
+# 更新 golang 1.23 版本
 cd $GITHUB_WORKSPACE/openwrt
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
 # 更新 chinadns-ng 版本
 #svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
