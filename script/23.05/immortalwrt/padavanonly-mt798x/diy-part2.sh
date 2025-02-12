@@ -109,9 +109,9 @@ sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By LesLie.W'/g" package/base
 # rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 
 # 更新 golang 1.23 版本
-##cd $GITHUB_WORKSPACE/openwrt
-##rm -rf feeds/packages/lang/golang
-##git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+cd $GITHUB_WORKSPACE/openwrt
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
 # 更新 chinadns-ng 版本
 #svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
