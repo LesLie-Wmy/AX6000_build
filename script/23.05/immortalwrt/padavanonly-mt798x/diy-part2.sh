@@ -131,13 +131,13 @@ git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/l
 
 ###merge_package master https://github.com/coolsnowwolf/lede.git package/feeds/NueXini_Packages package/lean/vsftpd-alt
 
-#cd $GITHUB_WORKSPACE/openwrt
-#sed -i '/luci-app-upnp/d' ./.config
-#sed -i '/miniupnpd/d' ./.config
+cd $GITHUB_WORKSPACE/openwrt
+sed -i '/luci-app-upnp/d' ./.config
+sed -i '/miniupnpd/d' ./.config
 
-#echo "CONFIG_PACKAGE_luci-app-upnp=n" >> ./.config
-#echo "CONFIG_PACKAGE_miniupnpd=n" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-upnp=n" >> ./.config
+echo "CONFIG_PACKAGE_miniupnpd=n" >> ./.config
 
-#echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
-#echo "CONFIG_PACKAGE_luci-app-mihomo=y" >> ./.config
-#echo "CONFIG_PACKAGE_luci-app-upnp-mtk-adjust=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-mihomo=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-upnp-mtk-adjust=y" >> ./.config
