@@ -115,8 +115,8 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/openwrt/package/
 
-        $GITHUB_WORKSPACE/Scripts/Packages.sh
-        $GITHUB_WORKSPACE/Scripts/Handles.sh
+        $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Packages.sh
+        $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Handles.sh
           
     - name: Load custom configuration
       run: |
@@ -124,7 +124,7 @@ jobs:
          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
          chmod +x $DIY_P2_SH
          cd openwrt
-         $GITHUB_WORKSPACE/Scripts/Settings.sh
+         $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Settings.sh
          sed -i 's/192.168.1.1/'"${LANIP}"'/g' package/base-files/files/bin/config_generate
 
     - name: SSH connection to Actions
