@@ -113,16 +113,22 @@ jobs:
 
     - name: Custom Packages
       run: |
+        cd $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore
+        chmod +x Packages.sh
+        chmod +x Handles.sh
+        chmod +x Settings.sh
+        
         cd $GITHUB_WORKSPACE/openwrt/package/
-
+        
         $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Packages.sh
         $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Handles.sh
           
     - name: Load custom configuration
       run: |
-         [ -e files ] && mv files openwrt/files
-         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-         chmod +x $DIY_P2_SH
+         #[ -e files ] && mv files openwrt/files
+         #[ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+         #chmod +x $DIY_P2_SH
+         
          cd openwrt
          $GITHUB_WORKSPACE/script/24.10/immortalwrt/NekokeCore/Settings.sh
          sed -i 's/192.168.1.1/'"${LANIP}"'/g' package/base-files/files/bin/config_generate
