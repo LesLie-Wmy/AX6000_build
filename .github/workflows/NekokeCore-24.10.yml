@@ -1,0 +1,241 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: NekokeCore-immortalwrt-24.10
+
+on:
+  repository_dispatch:
+  schedule:
+    - cron: 30 22 * * *
+  workflow_dispatch:
+    inputs:
+      ip:
+        description: 'lan ip address'
+        required: true
+        default: '192.168.1.1'
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+        
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+  
+env:
+  REPO_URL: https://github.com/NekokeCore/immortalwrt-mt798x-24.10.git
+  REPO_BRANCH: openwrt-24.10
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: config/24.10/immortalwrt/NekokeCore.config
+  DIY_P1_SH: script/24.10/immortalwrt/NekokeCore/diy-part1.sh
+  DIY_P2_SH: script/24.10/immortalwrt/NekokeCore/diy-part2.sh
+  UPLOAD_BIN_DIR: true
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+  LANIP: 192.168.1.1
+
+jobs:
+  build_firmware:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout Projects
+      uses: actions/checkout@main
+
+    - name: Free Disk Space
+      uses: FirelightFlagboy/gh-runner-free-disk-space@main
+      with:
+        android: true
+        dotnet: true
+        haskell: true
+        docker-images: true
+        large-packages: true
+        swap-storage: true
+        tool-cache: true
+
+    - name: Initialization Environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt -yqq update
+        sudo -E apt -yqq full-upgrade
+        sudo -E apt -yqq autoremove --purge
+        sudo -E apt -yqq autoclean
+        sudo -E apt -yqq clean
+        sudo -E apt -yqq install dos2unix libfuse-dev
+        sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+        sudo -E systemctl daemon-reload
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p ${GITHUB_WORKSPACE}/workdir
+        sudo ln -sf ${GITHUB_WORKSPACE}/workdir /workdir
+        sudo chown $USER:$GROUPS ${GITHUB_WORKSPACE}/workdir
+        sudo chown $USER:$GROUPS /workdir
+      
+    - name: Check space usage
+      if: (!cancelled())
+      run: df -hT
+    
+    - name: Clone source code
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: Load custom feeds
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
+
+    - name: Update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
+    
+    - name: Set Lan IP
+      if: ${{ github.event.inputs.ip != null }}
+      run: export LANIP=${{ github.event.inputs.ip }}
+
+    - name: Load custom configuration
+      run: |
+         [ -e files ] && mv files openwrt/files
+         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+         chmod +x $DIY_P2_SH
+         cd openwrt
+         $GITHUB_WORKSPACE/$DIY_P2_SH
+         sed -i 's/192.168.1.1/'"${LANIP}"'/g' package/base-files/files/bin/config_generate
+
+    - name: SSH connection to Actions
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: Download package
+      id: package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile the firmware
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        # make -j$(nproc) || make -j1 || make -j1 V=s
+        make -j1 V=s
+        echo "::set-output name=status::success"
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+    - name: Check space usage
+      if: (!cancelled())
+      run: df -hT
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin-${{ github.workflow }}-${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        path: openwrt/bin
+
+    - name: Organize files
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt
+        for FILE in $(find  ./bin/targets/ -type f -iname "*$TYPE*.*") ; do
+          EXT=$(basename $FILE | cut -d '.' -f 2-)
+          NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($TYPE\).*")
+          P=${FILE//$(basename $FILE)/$replace}
+          NEW_FILE="$P""${{ env.FILE_DATE }}"_"$NAME"."$EXT"
+          echo "$FILE => $NEW_FILE"
+          mv -f $FILE $NEW_FILE
+        done
+        cd bin/targets/*/*
+        #rm -rf packages
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware-${{ github.workflow }}-${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}
+
+    - name: Upload firmware to cowtransfer
+      id: cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to WeTransfer
+      id: wetransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+
+    - name: Generate release tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::${{ github.workflow }}-${{ env.FILE_DATE }}"
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && [ $UPLOAD_WETRANSFER = true ] && echo "------" >> release.txt
+        echo "🎉🎉🎉🎉🎉🎉🎉🎉" >> release.txt
+        echo "## padavanonly immortalwrt-23.05 uboot layout " >> release.txt
+        echo "* This is Redmi AX6000 firewarm only for uboot layout!!! " >> release.txt
+        echo "* 这是红米AX6000 uboot layout 固件，其他分区请勿刷入！！！" >> release.txt
+        echo "由衷感谢所有为openwrt无私奉献的大佬们" >> release.txt
+        echo "* Lan ip is: \`$LANIP\`" >> release.txt
+        echo "* password is \`password\`" >> release.txt
+        echo "------" >> release.txt
+        useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
+        echo "$useVersionInfo" >> release.txt
+        echo "📥 固件下载" >> release.txt
+        echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    # - name: Delete workflow runs
+    #   uses: Mattraks/delete-workflow-runs@main
+    #   with:
+    #     retain_days: 0
+    #     keep_minimum_runs: 9
+
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        keep_latest: 5
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
